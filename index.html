@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homy Laundry - Fresh & Clean</title>
+    
+    <!-- FAVICON (Ganti 'nama-logo-lo.png' dengan nama file logo lo yang asli) -->
+    <link rel="icon" href="homy-logo.png" type="image/png">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Custom Config for Colors -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',  /* Very light blue */
+                            100: '#e0f2fe', /* Light blue */
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9', /* Primary Blue */
+                            600: '#0284c7',
+                            900: '#0c4a6e', /* Dark text */
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #bae6fd;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #7dd3fc;
+        }
+
+        /* Glassmorphism Utility */
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        
+        /* Floating Animation */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Hide mobile menu by default */
+        #mobile-menu {
+            transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        #mobile-menu.open {
+            max-height: 400px;
+            opacity: 1;
+        }
+
+        /* Custom Hover Zooms for Images */
+        .hover-zoom-img {
+            transition: transform 0.5s ease;
+        }
+        .group:hover .hover-zoom-img {
+            transform: scale(1.05);
+        }
+
+        /* Slider Styles */
+        .slider-container {
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* IE 10+ */
+        }
+        .slider-container::-webkit-scrollbar {
+            display: none; /* Chrome/Safari */
+        }
+    </style>
+</head>
+<body class="font-sans text-slate-600 bg-brand-50 selection:bg-brand-200 selection:text-brand-900 overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass shadow-sm transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo (Updated with space) -->
+                <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer group" onclick="window.scrollTo(0,0)">
+                    <div class="w-10 h-10 bg-brand-500 rounded-full flex items-center justify-center text-white shadow-lg transition-transform duration-300 group-hover:rotate-12">
+                        <i class="fa-solid fa-soap text-lg"></i>
+                    </div>
+                    <span class="font-bold text-2xl text-brand-900 tracking-tight">Homy <span class="text-brand-500">Laundry</span></span>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#home" class="text-brand-900 hover:text-brand-500 font-medium transition relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-brand-500 after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left">Home</a>
+                    <a href="#services" class="text-slate-600 hover:text-brand-500 font-medium transition relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-brand-500 after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left">Services</a>
+                    <a href="#gallery" class="text-slate-600 hover:text-brand-500 font-medium transition relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-brand-500 after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left">Gallery</a>
+                    <a href="#process" class="text-slate-600 hover:text-brand-500 font-medium transition relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-brand-500 after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left">How it Works</a>
+                    <a href="#pricing" class="text-slate-600 hover:text-brand-500 font-medium transition relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-brand-500 after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left">Pricing</a>
+                    <button onclick="openModal()" class="bg-brand-500 hover:bg-brand-600 text-white px-6 py-2.5 rounded-full font-medium shadow-lg shadow-brand-200 transition-all duration-300 hover:-translate-y-1 hover:shadow-brand-300">
+                        Book Pickup
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-brand-900 hover:text-brand-500 focus:outline-none p-2 transition-transform active:scale-95">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="md:hidden bg-white border-t border-gray-100">
+            <div class="px-4 pt-2 pb-6 space-y-2 shadow-lg">
+                <a href="#home" class="block px-3 py-3 rounded-lg text-base font-medium text-brand-900 hover:bg-brand-50 transition-colors">Home</a>
+                <a href="#services" class="block px-3 py-3 rounded-lg text-base font-medium text-slate-600 hover:bg-brand-50 transition-colors">Services</a>
+                <a href="#gallery" class="block px-3 py-3 rounded-lg text-base font-medium text-slate-600 hover:bg-brand-50 transition-colors">Gallery</a>
+                <a href="#process" class="block px-3 py-3 rounded-lg text-base font-medium text-slate-600 hover:bg-brand-50 transition-colors">How it Works</a>
+                <a href="#pricing" class="block px-3 py-3 rounded-lg text-base font-medium text-slate-600 hover:bg-brand-50 transition-colors">Pricing</a>
+                <button onclick="openModal()" class="w-full mt-4 bg-brand-500 text-white px-3 py-3 rounded-lg font-medium shadow-md active:scale-95 transition-transform">Book Now</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden relative">
+        <!-- Background Blobs -->
+        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-brand-200 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob"></div>
+        <div class="absolute top-0 left-0 -ml-20 -mt-20 w-72 h-72 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob animation-delay-2000"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+                <!-- Text Content -->
+                <div class="text-center lg:text-left z-10" data-aos="fade-up" data-aos-duration="1000">
+                    <div class="inline-block px-4 py-1.5 rounded-full bg-brand-100 text-brand-600 font-semibold text-sm mb-6 shadow-sm hover:scale-105 transition-transform cursor-default">
+                        <i class="fa-solid fa-star text-xs mr-1 animate-pulse"></i> #1 Rated Laundry Service
+                    </div>
+                    <h1 class="text-5xl lg:text-6xl font-bold text-brand-900 leading-tight mb-6">
+                        Fresh Clothes, <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-brand-300">Happy Life.</span>
+                    </h1>
+                    <p class="text-lg text-slate-600 mb-8 leading-relaxed max-w-lg mx-auto lg:mx-0" data-aos="fade-up" data-aos-delay="200">
+                        Experience the coziest laundry service. We pick up, clean with care, and deliver your clothes fresh and neatly folded.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start" data-aos="fade-up" data-aos-delay="400">
+                        <button onclick="openModal()" class="group px-8 py-4 bg-brand-500 hover:bg-brand-600 text-white rounded-full font-semibold shadow-lg shadow-brand-200 transition-all duration-300 hover:-translate-y-1 flex items-center justify-center gap-2">
+                            <span>Schedule Pickup</span>
+                            <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </button>
+                        <a href="#pricing" class="px-8 py-4 bg-white text-brand-900 hover:text-brand-600 rounded-full font-semibold shadow-md border border-gray-100 transition-all duration-300 hover:bg-brand-50 hover:-translate-y-1 flex items-center justify-center">
+                            View Pricing
+                        </a>
+                    </div>
+                    
+                    <div class="mt-10 flex items-center justify-center lg:justify-start gap-6 text-slate-500 text-sm" data-aos="fade-in" data-aos-delay="600">
+                        <div class="flex items-center gap-2 hover:text-brand-500 transition-colors cursor-default">
+                            <i class="fa-solid fa-truck-fast text-brand-500"></i> Free Pickup
+                        </div>
+                        <div class="flex items-center gap-2 hover:text-brand-500 transition-colors cursor-default">
+                            <i class="fa-solid fa-leaf text-brand-500"></i> Eco-Friendly
+                        </div>
+                        <div class="flex items-center gap-2 hover:text-brand-500 transition-colors cursor-default">
+                            <i class="fa-regular fa-clock text-brand-500"></i> 24h Turnaround
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Image/Illustration (EXISTING LINK KEPT) -->
+                <div class="relative lg:h-[600px] flex items-center justify-center" data-aos="fade-left" data-aos-duration="1200">
+                    <div class="relative z-10 w-full max-w-md lg:max-w-full animate-float group">
+                        <!-- Decorative Card 1 -->
+                        <div class="absolute -left-4 top-10 bg-white p-4 rounded-2xl shadow-xl z-20 hidden md:block transition-transform duration-500 hover:scale-110 hover:rotate-2">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-500">
+                                    <i class="fa-solid fa-check"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-slate-500">Status</p>
+                                    <p class="font-bold text-slate-800">Done Perfectly</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Main Image -->
+                        <div class="rounded-[2.5rem] overflow-hidden shadow-2xl border-8 border-white relative transition-transform duration-500">
+                             <img src="https://images.unsplash.com/photo-1631041556964-57f2686f1113?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+                                  alt="Clean Laundry Stack" 
+                                  class="w-full h-full object-cover hover-zoom-img"
+                                  onerror="this.src='https://placehold.co/600x800/e0f2fe/0ea5e9?text=Homy+Laundry'">
+                            <div class="absolute inset-0 bg-gradient-to-t from-brand-900/30 to-transparent pointer-events-none"></div>
+                        </div>
+
+                        <!-- Decorative Card 2 -->
+                        <div class="absolute -right-4 bottom-20 bg-white p-4 rounded-2xl shadow-xl z-20 hidden md:block transition-transform duration-500 hover:scale-110 hover:-rotate-2">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-brand-100 flex items-center justify-center text-brand-500">
+                                    <i class="fa-solid fa-shirt"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-slate-500">Total Items</p>
+                                    <p class="font-bold text-slate-800">15kg Washed</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-white relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-brand-500 font-semibold uppercase tracking-wide text-sm mb-2">Our Services</h2>
+                <h3 class="text-3xl md:text-4xl font-bold text-brand-900">Quality Care for Your Wear</h3>
+                <p class="mt-4 text-slate-600 max-w-2xl mx-auto">We treat every garment with the gentle touch it deserves. Choose the service that fits your needs.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="group p-8 rounded-3xl bg-brand-50 hover:bg-brand-500 transition-all duration-500 hover:shadow-2xl hover:-translate-y-3 cursor-default border border-transparent hover:border-brand-400" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-brand-500 mb-6 shadow-sm group-hover:text-brand-500 group-hover:scale-110 transition-transform duration-500">
+                        <i class="fa-solid fa-jug-detergent text-3xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-brand-900 mb-3 group-hover:text-white transition-colors">Wash & Fold</h4>
+                    <p class="text-slate-600 group-hover:text-blue-50 leading-relaxed transition-colors">Everyday laundry washed, dried, and neatly folded. Perfect for your weekly needs.</p>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="group p-8 rounded-3xl bg-brand-50 hover:bg-brand-500 transition-all duration-500 hover:shadow-2xl hover:-translate-y-3 cursor-default border border-transparent hover:border-brand-400" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-brand-500 mb-6 shadow-sm group-hover:scale-110 transition-transform duration-500">
+                        <i class="fa-solid fa-shirt text-3xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-brand-900 mb-3 group-hover:text-white transition-colors">Dry Cleaning</h4>
+                    <p class="text-slate-600 group-hover:text-blue-50 leading-relaxed transition-colors">Professional care for your delicate fabrics like suits, dresses, and silk items.</p>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="group p-8 rounded-3xl bg-brand-50 hover:bg-brand-500 transition-all duration-500 hover:shadow-2xl hover:-translate-y-3 cursor-default border border-transparent hover:border-brand-400" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-brand-500 mb-6 shadow-sm group-hover:scale-110 transition-transform duration-500">
+                        <i class="fa-solid fa-socks text-3xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-brand-900 mb-3 group-hover:text-white transition-colors">Ironing & Pressing</h4>
+                    <p class="text-slate-600 group-hover:text-blue-50 leading-relaxed transition-colors">Look sharp with our crisp ironing service. We banish wrinkles for good.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section (EXISTING SLIDER) -->
+    <section id="gallery" class="py-20 bg-brand-50 overflow-hidden relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12" data-aos="fade-up">
+                <h2 class="text-brand-500 font-semibold uppercase tracking-wide text-sm mb-2">Our Gallery</h2>
+                <h3 class="text-3xl md:text-4xl font-bold text-brand-900">Peek Inside Our World</h3>
+            </div>
+
+            <!-- Slider Container -->
+            <div class="relative w-full max-w-5xl mx-auto rounded-3xl overflow-hidden shadow-2xl border-4 border-white" data-aos="zoom-in" data-aos-delay="200">
+                <!-- Slides -->
+                <div id="slider-track" class="flex transition-transform duration-700 ease-in-out">
+                    <!-- Slide 1 -->
+                    <div class="min-w-full relative h-64 md:h-96 lg:h-[500px]">
+                        <img src="https://images.unsplash.com/photo-1521656693074-0ef32e80a5d5?q=80&w=1200&auto=format&fit=crop" alt="Laundry Machines" class="w-full h-full object-cover">
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6 text-white">
+                            <h4 class="font-bold text-xl">Modern Equipment</h4>
+                            <p class="text-sm opacity-90">We use the latest technology for deep cleaning.</p>
+                        </div>
+                    </div>
+                    <!-- Slide 2 -->
+                    <div class="min-w-full relative h-64 md:h-96 lg:h-[500px]">
+                        <img src="images\slide-2.png" alt="Folding Clothes" class="w-full h-full object-cover">
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6 text-white">
+                            <h4 class="font-bold text-xl">Expert Care</h4>
+                            <p class="text-sm opacity-90">Hand-folded with precision and love.</p>
+                        </div>
+                    </div>
+                    <!-- Slide 3 -->
+                    <div class="min-w-full relative h-64 md:h-96 lg:h-[500px]">
+                        <img src="https://images.unsplash.com/photo-1650964336783-fd8c0c241b13?q=80&w=1169&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Detergents" class="w-full h-full object-cover">
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6 text-white">
+                            <h4 class="font-bold text-xl">Eco-Friendly Products</h4>
+                            <p class="text-sm opacity-90">Safe for your skin and the planet.</p>
+                        </div>
+                    </div>
+                    <!-- Slide 4 -->
+                    <div class="min-w-full relative h-64 md:h-96 lg:h-[500px]">
+                        <img src="https://plus.unsplash.com/premium_photo-1681493795338-e797a16e8934?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Delivery" class="w-full h-full object-cover">
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6 text-white">
+                            <h4 class="font-bold text-xl">Fast Delivery</h4>
+                            <p class="text-sm opacity-90">From our door to yours in record time.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Buttons (Mobile & Desktop compatible) -->
+                <button onclick="prevSlide()" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/30 hover:bg-white/80 text-white hover:text-brand-900 p-3 rounded-full backdrop-blur-sm transition-all duration-300 focus:outline-none">
+                    <i class="fa-solid fa-chevron-left text-xl"></i>
+                </button>
+                <button onclick="nextSlide()" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/30 hover:bg-white/80 text-white hover:text-brand-900 p-3 rounded-full backdrop-blur-sm transition-all duration-300 focus:outline-none">
+                    <i class="fa-solid fa-chevron-right text-xl"></i>
+                </button>
+
+                <!-- Dots Indicator -->
+                <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                    <button onclick="goToSlide(0)" class="dot w-3 h-3 rounded-full bg-white/50 hover:bg-white transition-all duration-300 active"></button>
+                    <button onclick="goToSlide(1)" class="dot w-3 h-3 rounded-full bg-white/50 hover:bg-white transition-all duration-300"></button>
+                    <button onclick="goToSlide(2)" class="dot w-3 h-3 rounded-full bg-white/50 hover:bg-white transition-all duration-300"></button>
+                    <button onclick="goToSlide(3)" class="dot w-3 h-3 rounded-full bg-white/50 hover:bg-white transition-all duration-300"></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section id="process" class="py-20 bg-white overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div data-aos="fade-right">
+                    <h2 class="text-brand-500 font-semibold uppercase tracking-wide text-sm mb-2">How It Works</h2>
+                    <h3 class="text-3xl md:text-4xl font-bold text-brand-900 mb-6">Laundry Day, Done in 4 Easy Steps</h3>
+                    <p class="text-slate-600 mb-8">Forget about sorting, washing, and folding. We've streamlined the process so you can get back to doing what you love.</p>
+                    
+                    <div class="space-y-6">
+                        <!-- Step 1 -->
+                        <div class="flex items-start gap-4 group cursor-default" data-aos="fade-up" data-aos-delay="100">
+                            <div class="w-10 h-10 rounded-full bg-brand-200 flex items-center justify-center text-brand-700 font-bold flex-shrink-0 group-hover:bg-brand-500 group-hover:text-white transition-colors duration-300">1</div>
+                            <div>
+                                <h5 class="font-bold text-brand-900 text-lg group-hover:text-brand-600 transition-colors">Book Online</h5>
+                                <p class="text-slate-600 text-sm">Schedule a pickup time via our website or phone.</p>
+                            </div>
+                        </div>
+                        <!-- Step 2 -->
+                        <div class="flex items-start gap-4 group cursor-default" data-aos="fade-up" data-aos-delay="200">
+                            <div class="w-10 h-10 rounded-full bg-brand-200 flex items-center justify-center text-brand-700 font-bold flex-shrink-0 group-hover:bg-brand-500 group-hover:text-white transition-colors duration-300">2</div>
+                            <div>
+                                <h5 class="font-bold text-brand-900 text-lg group-hover:text-brand-600 transition-colors">We Pickup</h5>
+                                <p class="text-slate-600 text-sm">Our friendly driver collects your laundry bags.</p>
+                            </div>
+                        </div>
+                        <!-- Step 3 -->
+                        <div class="flex items-start gap-4 group cursor-default" data-aos="fade-up" data-aos-delay="300">
+                            <div class="w-10 h-10 rounded-full bg-brand-200 flex items-center justify-center text-brand-700 font-bold flex-shrink-0 group-hover:bg-brand-500 group-hover:text-white transition-colors duration-300">3</div>
+                            <div>
+                                <h5 class="font-bold text-brand-900 text-lg group-hover:text-brand-600 transition-colors">We Clean</h5>
+                                <p class="text-slate-600 text-sm">Expert washing with premium eco-friendly detergents.</p>
+                            </div>
+                        </div>
+                        <!-- Step 4 -->
+                        <div class="flex items-start gap-4 group cursor-default" data-aos="fade-up" data-aos-delay="400">
+                            <div class="w-10 h-10 rounded-full bg-brand-500 text-white flex items-center justify-center font-bold flex-shrink-0 shadow-lg shadow-brand-200 group-hover:scale-110 transition-transform">4</div>
+                            <div>
+                                <h5 class="font-bold text-brand-900 text-lg group-hover:text-brand-600 transition-colors">Delivery</h5>
+                                <p class="text-slate-600 text-sm">Fresh, folded clothes delivered to your door.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Process Image (EXISTING LINK KEPT) -->
+                <div class="relative group" data-aos="zoom-in" data-aos-duration="1000">
+                     <div class="absolute inset-0 bg-brand-200 rounded-[2rem] transform rotate-3 group-hover:rotate-6 transition-transform duration-500"></div>
+                     <div class="rounded-[2rem] overflow-hidden shadow-2xl border-4 border-white relative z-10">
+                         <img src="images\last-slide.png" 
+                              alt="Woman holding laundry basket" 
+                              class="object-cover h-[500px] w-full hover-zoom-img"
+                              onerror="this.src='https://placehold.co/600x500/e0f2fe/0ea5e9?text=Delivery+Step'">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-20 bg-brand-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-down">
+                <h2 class="text-brand-500 font-semibold uppercase tracking-wide text-sm mb-2">Transparent Pricing</h2>
+                <h3 class="text-3xl md:text-4xl font-bold text-brand-900">Simple Plans for Everyone</h3>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <!-- Plan 1 -->
+                <div class="border border-gray-100 rounded-3xl p-8 bg-white hover:shadow-xl transition-all duration-300 hover:-translate-y-2" data-aos="fade-up" data-aos-delay="100">
+                    <h4 class="text-brand-900 font-bold text-xl mb-2">Pay Per KG</h4>
+                    <p class="text-slate-500 text-sm mb-6">Best for regular loads</p>
+                    <div class="flex items-baseline mb-6">
+                        <span class="text-3xl font-bold text-brand-500">Rp 15.000</span>
+                        <span class="text-slate-500 ml-2">/ kg</span>
+                    </div>
+                    <ul class="space-y-3 mb-8 text-slate-600 text-sm">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500"></i> Wash & Fold</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500"></i> Eco Detergent</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500"></i> 48h Delivery</li>
+                        <li class="flex items-center gap-2 text-slate-400"><i class="fa-solid fa-xmark"></i> Ironing</li>
+                    </ul>
+                    <button onclick="openModal()" class="w-full py-3 rounded-xl border-2 border-brand-100 text-brand-600 font-semibold hover:bg-brand-50 hover:shadow-md transition-all">Choose Plan</button>
+                </div>
+
+                <!-- Plan 2 (Featured) -->
+                <div class="relative border border-brand-200 rounded-3xl p-8 bg-brand-50 shadow-lg transform md:-translate-y-4 transition-all duration-300 hover:shadow-2xl hover:scale-105 z-10" data-aos="fade-up" data-aos-delay="300">
+                    <div class="absolute top-0 right-0 bg-brand-500 text-white text-xs font-bold px-3 py-1 rounded-bl-xl rounded-tr-2xl animate-pulse">POPULAR</div>
+                    <h4 class="text-brand-900 font-bold text-xl mb-2">Standard Load</h4>
+                    <p class="text-brand-700 text-sm mb-6">Ironing included</p>
+                    <div class="flex items-baseline mb-6">
+                        <span class="text-3xl font-bold text-brand-900">Rp 25.000</span>
+                        <span class="text-brand-700 ml-2">/ kg</span>
+                    </div>
+                    <ul class="space-y-3 mb-8 text-slate-700 text-sm">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-500"></i> Wash & Fold</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-500"></i> Premium Softener</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-500"></i> Ironing Service</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-500"></i> 24h Delivery</li>
+                    </ul>
+                    <button onclick="openModal()" class="w-full py-3 rounded-xl bg-brand-500 text-white font-semibold hover:bg-brand-600 shadow-md hover:shadow-lg transition-all">Choose Plan</button>
+                </div>
+
+                <!-- Plan 3 -->
+                <div class="border border-gray-100 rounded-3xl p-8 bg-white hover:shadow-xl transition-all duration-300 hover:-translate-y-2" data-aos="fade-up" data-aos-delay="500">
+                    <h4 class="text-brand-900 font-bold text-xl mb-2">Dry Cleaning</h4>
+                    <p class="text-slate-500 text-sm mb-6">Per item pricing</p>
+                    <div class="flex items-baseline mb-6">
+                        <span class="text-3xl font-bold text-brand-500">Rp 50.000</span>
+                        <span class="text-slate-500 ml-2">/ start</span>
+                    </div>
+                    <ul class="space-y-3 mb-8 text-slate-600 text-sm">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500"></i> Suits & Dresses</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500"></i> Stain Removal</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500"></i> Hanger Delivery</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500"></i> 72h Turnaround</li>
+                    </ul>
+                    <button onclick="openModal()" class="w-full py-3 rounded-xl border-2 border-brand-100 text-brand-600 font-semibold hover:bg-brand-50 hover:shadow-md transition-all">Choose Plan</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonial Banner SLIDER (MODIFIED - FADE LOOP INFINITE) -->
+    <section class="py-16 bg-brand-500 text-white overflow-hidden relative">
+        <div class="max-w-4xl mx-auto px-4 text-center relative z-10" data-aos="zoom-in-up" data-aos-duration="1000">
+            <!-- 
+                Slider Track Modified to Grid for Stacking (Fade Effect)
+                grid-cols-1: Creates 1 column
+                items-center: Vertically center
+            -->
+            <div id="testimonial-track" class="grid grid-cols-1 place-items-center relative min-h-[250px] md:min-h-[200px]">
+                
+                <!-- Slide 1 -->
+                <!-- col-start-1 row-start-1: Stacks them all on top of each other -->
+                <div class="col-start-1 row-start-1 transition-opacity duration-1000 ease-in-out opacity-0 flex flex-col items-center pointer-events-none w-full">
+                    <i class="fa-solid fa-quote-left text-4xl text-brand-300 mb-6 opacity-50"></i>
+                    <p class="text-2xl md:text-3xl font-medium leading-relaxed mb-8">"Homy Laundry completely changed my weekends. I used to spend Sundays fighting with the washing machine, now I spend them relaxing. The clothes come back smelling amazing!"</p>
+                    <div class="flex items-center justify-center gap-4">
+                        <img src="https://media.istockphoto.com/id/1129638608/photo/smiling-businesswoman-looking-at-camera-webcam-make-conference-business-call.jpg?s=612x612&w=0&k=20&c=NH4ZQvdy7E8Gnen21e50zgKjbZzgNygnrVzCI0E3u9o=" alt="Sarah" class="w-12 h-12 rounded-full border-2 border-white object-cover">
+                        <div class="text-left">
+                            <p class="font-bold text-white">Sarah Jenkins</p>
+                            <p class="text-brand-100 text-sm">Loyal Customer</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 2 -->
+                <div class="col-start-1 row-start-1 transition-opacity duration-1000 ease-in-out opacity-0 flex flex-col items-center pointer-events-none w-full">
+                    <i class="fa-solid fa-quote-left text-4xl text-brand-300 mb-6 opacity-50"></i>
+                    <p class="text-2xl md:text-3xl font-medium leading-relaxed mb-8">"Never seen my shirts this crisp before! Their ironing service is top-notch, and the pickup team is always punctual and super polite. Highly recommended!"</p>
+                    <div class="flex items-center justify-center gap-4">
+                        <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?q=80&w=200&auto=format&fit=crop" alt="Michael" class="w-12 h-12 rounded-full border-2 border-white object-cover">
+                        <div class="text-left">
+                            <p class="font-bold text-white">Michael Chen</p>
+                            <p class="text-brand-100 text-sm">Business Professional</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 3 -->
+                <div class="col-start-1 row-start-1 transition-opacity duration-1000 ease-in-out opacity-0 flex flex-col items-center pointer-events-none w-full">
+                    <i class="fa-solid fa-quote-left text-4xl text-brand-300 mb-6 opacity-50"></i>
+                    <p class="text-2xl md:text-3xl font-medium leading-relaxed mb-8">"I love that they use eco-friendly detergents. My skin is sensitive, and Homy Laundry is the only service that gets my clothes clean without irritation."</p>
+                    <div class="flex items-center justify-center gap-4">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&auto=format&fit=crop" alt="Jessica" class="w-12 h-12 rounded-full border-2 border-white object-cover">
+                        <div class="text-left">
+                            <p class="font-bold text-white">Jessica Tan</p>
+                            <p class="text-brand-100 text-sm">Eco Enthusiast</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 4 -->
+                <div class="col-start-1 row-start-1 transition-opacity duration-1000 ease-in-out opacity-0 flex flex-col items-center pointer-events-none w-full">
+                    <i class="fa-solid fa-quote-left text-4xl text-brand-300 mb-6 opacity-50"></i>
+                    <p class="text-2xl md:text-3xl font-medium leading-relaxed mb-8">"Fast, reliable, and affordable. The 'Pay Per KG' plan is a lifesaver for my family's weekly laundry mountain. Thank you Homy!"</p>
+                    <div class="flex items-center justify-center gap-4">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop" alt="David" class="w-12 h-12 rounded-full border-2 border-white object-cover">
+                        <div class="text-left">
+                            <p class="font-bold text-white">David Santoso</p>
+                            <p class="text-brand-100 text-sm">Family Man</p>
+                        </div>
+                    </div>
+                </div>
+
+                 <!-- Slide 5 -->
+                 <div class="col-start-1 row-start-1 transition-opacity duration-1000 ease-in-out opacity-0 flex flex-col items-center pointer-events-none w-full">
+                    <i class="fa-solid fa-quote-left text-4xl text-brand-300 mb-6 opacity-50"></i>
+                    <p class="text-2xl md:text-3xl font-medium leading-relaxed mb-8">"The dry cleaning quality is comparable to high-end boutiques but at a fraction of the price. My silk dresses come back looking brand new."</p>
+                    <div class="flex items-center justify-center gap-4">
+                        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=200&auto=format&fit=crop" alt="Amanda" class="w-12 h-12 rounded-full border-2 border-white object-cover">
+                        <div class="text-left">
+                            <p class="font-bold text-white">Amanda Lee</p>
+                            <p class="text-brand-100 text-sm">Fashion Designer</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-brand-50 rounded-[2.5rem] p-8 md:p-12 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-8 border border-brand-100 hover:shadow-brand-200/50 transition-shadow duration-500" data-aos="flip-up" data-aos-duration="1000">
+                <div>
+                    <h2 class="text-3xl font-bold text-brand-900 mb-3">Ready to free up your time?</h2>
+                    <p class="text-slate-600 mb-6 md:mb-0">Get Rp 20.000 off your first order with code: <strong class="text-brand-500 bg-white px-2 py-1 rounded border border-brand-200 border-dashed">HOMY10</strong></p>
+                </div>
+                <div class="flex gap-4 w-full md:w-auto">
+                    <button onclick="openModal()" class="group flex-1 md:flex-none px-8 py-4 bg-brand-500 hover:bg-brand-600 text-white rounded-full font-semibold shadow-lg shadow-brand-200 transition-all duration-300 hover:-translate-y-1 text-center hover:shadow-brand-300">
+                        Schedule Now <i class="fa-solid fa-paper-plane ml-2 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-100 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <!-- Brand -->
+                <div class="col-span-1 md:col-span-1" data-aos="fade-up">
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-8 h-8 bg-brand-500 rounded-full flex items-center justify-center text-white">
+                            <i class="fa-solid fa-soap text-sm"></i>
+                        </div>
+                        <span class="font-bold text-xl text-brand-900">Homy <span class="text-brand-500">Laundry</span></span>
+                    </div>
+                    <p class="text-slate-500 text-sm leading-relaxed mb-6">
+                        Your neighborhood laundry partner. Making clean clothes accessible, affordable, and effortless.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-slate-400 hover:text-brand-500 transition-all hover:-translate-y-1"><i class="fa-brands fa-instagram text-xl"></i></a>
+                        <a href="#" class="text-slate-400 hover:text-brand-500 transition-all hover:-translate-y-1"><i class="fa-brands fa-facebook text-xl"></i></a>
+                        <a href="#" class="text-slate-400 hover:text-brand-500 transition-all hover:-translate-y-1"><i class="fa-brands fa-twitter text-xl"></i></a>
+                    </div>
+                </div>
+
+                <!-- Links -->
+                <div data-aos="fade-up" data-aos-delay="100">
+                    <h5 class="font-bold text-brand-900 mb-4">Company</h5>
+                    <ul class="space-y-2 text-sm text-slate-500">
+                        <li><a href="#" class="hover:text-brand-500 transition-colors hover:pl-1">About Us</a></li>
+                        <li><a href="#" class="hover:text-brand-500 transition-colors hover:pl-1">Careers</a></li>
+                        <li><a href="#" class="hover:text-brand-500 transition-colors hover:pl-1">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-brand-500 transition-colors hover:pl-1">Terms of Service</a></li>
+                    </ul>
+                </div>
+
+                <!-- Services -->
+                <div data-aos="fade-up" data-aos-delay="200">
+                    <h5 class="font-bold text-brand-900 mb-4">Services</h5>
+                    <ul class="space-y-2 text-sm text-slate-500">
+                        <li><a href="#" class="hover:text-brand-500 transition-colors hover:pl-1">Wash & Fold</a></li>
+                        <li><a href="#" class="hover:text-brand-500 transition-colors hover:pl-1">Dry Cleaning</a></li>
+                        <li><a href="#" class="hover:text-brand-500 transition-colors hover:pl-1">Ironing</a></li>
+                        <li><a href="#" class="hover:text-brand-500 transition-colors hover:pl-1">Commercial</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div data-aos="fade-up" data-aos-delay="300">
+                    <h5 class="font-bold text-brand-900 mb-4">Contact</h5>
+                    <ul class="space-y-3 text-sm text-slate-500">
+                        <li class="flex items-center gap-2 group cursor-default">
+                            <i class="fa-solid fa-location-dot text-brand-400 group-hover:text-brand-600 transition-colors"></i> 
+                            <span class="group-hover:text-brand-700 transition-colors">123 Clean Street, Cityville</span>
+                        </li>
+                        <li class="flex items-center gap-2 group cursor-default">
+                            <i class="fa-solid fa-phone text-brand-400 group-hover:text-brand-600 transition-colors"></i> 
+                            <span class="group-hover:text-brand-700 transition-colors">(555) 123-4567</span>
+                        </li>
+                        <li class="flex items-center gap-2 group cursor-default">
+                            <i class="fa-solid fa-envelope text-brand-400 group-hover:text-brand-600 transition-colors"></i> 
+                            <span class="group-hover:text-brand-700 transition-colors">hello@homylaundry.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-100 pt-8 text-center">
+                <p class="text-slate-400 text-sm">&copy; 2023 Homy Laundry. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal Overlay (Hidden by default) -->
+    <div id="bookingModal" class="fixed inset-0 z-[60] hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            
+            <div class="fixed inset-0 bg-brand-900 bg-opacity-75 transition-opacity backdrop-blur-sm" onclick="closeModal()"></div>
+
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+            <div class="inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full animate-[fadeIn_0.3s_ease-out]">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div class="sm:flex sm:items-start">
+                        <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-brand-100 sm:mx-0 sm:h-10 sm:w-10 animate-bounce">
+                            <i class="fa-solid fa-calendar-check text-brand-500"></i>
+                        </div>
+                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                            <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">Schedule a Pickup</h3>
+                            <div class="mt-2">
+                                <p class="text-sm text-gray-500 mb-4">Fill in your details and we'll come running.</p>
+                                <form onsubmit="event.preventDefault(); submitForm();">
+                                    <div class="space-y-4">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700">Name</label>
+                                            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-200 focus:ring-opacity-50 p-2 border transition-colors" placeholder="John Doe" required>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700">Phone</label>
+                                            <input type="tel" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-200 focus:ring-opacity-50 p-2 border transition-colors" placeholder="(555) 000-0000" required>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700">Service Type</label>
+                                            <select class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-200 focus:ring-opacity-50 p-2 border transition-colors">
+                                                <option>Wash & Fold</option>
+                                                <option>Dry Cleaning</option>
+                                                <option>Ironing Only</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="mt-6 flex gap-3 justify-end">
+                                        <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 transition-colors sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" onclick="closeModal()">Cancel</button>
+                                        <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-brand-500 text-base font-medium text-white hover:bg-brand-600 transform active:scale-95 transition-all sm:ml-3 sm:w-auto sm:text-sm">Book Now</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AOS Library Script -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        // Initialize AOS Animation Library
+        AOS.init({
+            duration: 800, // Durasi animasi dalam milidetik
+            once: true,    // Animasi hanya terjadi sekali saat scroll ke bawah
+            offset: 100,   // Offset (jarak) sebelum animasi dimulai
+            easing: 'ease-out-cubic', // Tipe easing agar gerakan halus
+        });
+
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('open');
+        });
+
+        // Modal Logic
+        function openModal() {
+            document.getElementById('bookingModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('bookingModal').classList.add('hidden');
+        }
+
+        function submitForm() {
+            // Simulate form submission
+            const btn = document.querySelector('#bookingModal button[type="submit"]');
+            const originalText = btn.innerText;
+            
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Booking...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                alert("Pickup scheduled successfully! We will contact you shortly.");
+                closeModal();
+                btn.innerText = originalText;
+                btn.disabled = false;
+            }, 1500);
+        }
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 20) {
+                nav.classList.add('shadow-md');
+                nav.classList.replace('bg-white/70', 'bg-white/90');
+            } else {
+                nav.classList.remove('shadow-md');
+            }
+        });
+
+        // --- GALLERY SLIDER LOGIC (Existing, with buttons) ---
+        let currentSlide = 0;
+        const track = document.getElementById('slider-track');
+        const dots = document.querySelectorAll('.dot');
+        const totalSlides = 4; 
+
+        function updateSlider() {
+            track.style.transform = `translateX(-${currentSlide * 100}%)`;
+            
+            dots.forEach((dot, index) => {
+                if (index === currentSlide) {
+                    dot.classList.remove('bg-white/50');
+                    dot.classList.add('bg-white', 'scale-125');
+                } else {
+                    dot.classList.remove('bg-white', 'scale-125');
+                    dot.classList.add('bg-white/50');
+                }
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateSlider();
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateSlider();
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateSlider();
+        }
+
+        // Auto-play Gallery slider every 5 seconds
+        setInterval(nextSlide, 5000);
+
+        // --- TESTIMONIAL SLIDER LOGIC (UPDATED: FADE LOOP) ---
+        // Uses opacity stacking so the loop is visually seamless (no rewinding)
+        let testIndex = 0;
+        const testSlides = document.querySelectorAll('#testimonial-track > div'); // Select all slides inside the grid
+        const testCount = testSlides.length;
+
+        function showTestimonial() {
+            testSlides.forEach((slide, index) => {
+                if (index === testIndex) {
+                    // Show current slide
+                    slide.classList.remove('opacity-0', 'pointer-events-none');
+                    slide.classList.add('opacity-100', 'pointer-events-auto', 'z-10');
+                } else {
+                    // Hide others completely
+                    slide.classList.remove('opacity-100', 'pointer-events-auto', 'z-10');
+                    slide.classList.add('opacity-0', 'pointer-events-none');
+                }
+            });
+
+            // Increment index for next loop (Infinite simple math loop)
+            testIndex = (testIndex + 1) % testCount;
+        }
+
+        // Run immediately to show first slide
+        showTestimonial();
+
+        // Auto-play Testimonial slider every 4 seconds
+        setInterval(showTestimonial, 4000);
+
+    </script>
+</body>
+</html>
